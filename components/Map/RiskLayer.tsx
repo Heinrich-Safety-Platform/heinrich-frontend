@@ -110,6 +110,7 @@ export default function RiskLayer({ visible, radius = 2000 }: RiskLayerProps) {
     Object.values(circlesRef.current).forEach((circle) =>
       circle.setMap(visible ? map : null),
     );
+    if (!visible) setSelected(null);
   }, [visible, map]);
 
   return <MarkerPopup item={selected} onClose={() => setSelected(null)} />;

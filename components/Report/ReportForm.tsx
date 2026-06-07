@@ -180,7 +180,7 @@ export default function ReportForm({ initialLocation = null }: ReportFormProps) 
           accept="image/*"
           capture="environment"
           onChange={(event) => setPhoto(event.target.files?.[0] ?? null)}
-          className="text-sm text-zinc-600"
+          className="cursor-pointer text-sm text-zinc-600 file:mr-3 file:cursor-pointer file:rounded-full file:border-0 file:bg-foreground file:px-4 file:py-2 file:text-sm file:font-medium file:text-background hover:file:bg-[#383838]"
         />
         {photo && <p className="text-xs text-zinc-500">{photo.name}</p>}
       </section>
