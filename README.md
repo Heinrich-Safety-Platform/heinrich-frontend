@@ -25,5 +25,5 @@ npm run dev
 
 ## 알려진 제약 및 후속 과제
 
-- **PWA 미구현**: `manifest.json`과 Service Worker가 없어 오프라인 지원, 홈 화면 추가 등 PWA 핵심 기능은 동작하지 않습니다. 초기 설계 체크리스트에는 포함되어 있었으나, Next.js 최신 버전(16.x)·React 19 환경에서 Service Worker 캐싱이 카카오맵 SDK 로딩·동적 API(`/api/layers`)·이미지 업로드 흐름과 충돌할 가능성이 있어, 배포 안정성을 우선해 이번 릴리스에서는 후속 TODO로 분리했습니다.
+- **PWA 미구현**: `manifest.json`과 Service Worker가 없어 오프라인 지원, 홈 화면 추가 등 PWA 핵심 기능은 동작하지 않습니다. 초기 설계 체크리스트에는 포함되어 있었으나, Next.js 최신 버전(16.x)·React 19 환경에서 Service Worker 캐싱이 카카오맵 SDK 로딩·동적 API(`/api/layers`)·이미지 업로드 흐름에 미칠 영향을 충분히 검증할 시간이 부족해, 배포 안정성을 우선하여 후속 과제로 분리했습니다.
 - **향후 방향**: `manifest.json` 작성 → Service Worker(또는 `next-pwa`) 도입 → 오프라인 캐싱 전략 수립 순으로 진행 예정입니다.
