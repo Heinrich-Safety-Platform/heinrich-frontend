@@ -11,6 +11,9 @@ export interface RiskLayerItem {
   riskLevel: RiskLevel;
   reportCount: number;
   status: ReportStatus;
+  content?: string | null;
+  locationDetail?: string | null;
+  latestReportAt?: string | null;
 }
 
 // GET /api/admin/alerts — app/schemas/report.py AdminAlertResponse (snake_case로 직렬화됨)
