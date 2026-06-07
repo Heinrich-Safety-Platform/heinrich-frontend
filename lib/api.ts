@@ -1,6 +1,22 @@
-import { RiskLayerItem, AdminAlert, ReportStatus } from "@/types";
+import {
+  RiskLayerItem,
+  AdminAlert,
+  ReportStatus,
+  ReportCreateResponse,
+  StatusUpdateResponse,
+} from "@/types";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+const ADMIN_TOKEN = process.env.NEXT_PUBLIC_ADMIN_TOKEN ?? "";
+
+// 백엔드(app/api/reports.py _verify_admin)는 HTTPBearer를 사용하므로
+// 커스텀 헤더가 아닌 Authorization: Bearer <token> 형식이어야 한다.
+function adminHeaders(extra?: Record<string, string>): Record<string, string> {
+  return {
+    Authorization: `Bearer ${ADMIN_TOKEN}`,
+    ...extra,
+  };
+}
 
 export async function fetchRiskLayers(
   lat: number,
@@ -13,16 +29,19 @@ export async function fetchRiskLayers(
   return res.json();
 }
 
-export async function submitReport(data: FormData): Promise<void> {
-  await fetch(`${BASE_URL}/api/reports`, {
+export async function submitReport(
+  data: FormData,
+): Promise<ReportCreateResponse> {
+  const res = await fetch(`${BASE_URL}/api/reports`, {
     method: "POST",
     body: data,
   });
+  return res.json();
 }
 
 export async function fetchAdminAlerts(): Promise<AdminAlert[]> {
   const res = await fetch(`${BASE_URL}/api/admin/alerts`, {
-    headers: { token: process.env.NEXT_PUBLIC_ADMIN_TOKEN ?? "" },
+    headers: adminHeaders(),
   });
   return res.json();
 }
@@ -30,13 +49,11 @@ export async function fetchAdminAlerts(): Promise<AdminAlert[]> {
 export async function updateReportStatus(
   id: string,
   status: ReportStatus,
-): Promise<void> {
-  await fetch(`${BASE_URL}/api/admin/reports/${id}/status`, {
+): Promise<StatusUpdateResponse> {
+  const res = await fetch(`${BASE_URL}/api/admin/reports/${id}/status`, {
     method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      token: process.env.NEXT_PUBLIC_ADMIN_TOKEN ?? "",
-    },
+    headers: adminHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify({ status }),
   });
+  return res.json();
 }
