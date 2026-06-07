@@ -29,8 +29,6 @@ interface MarkerPopupProps {
   onClose: () => void;
 }
 
-// RiskLayerItem에는 created_at/content/location_detail이 없으므로(백엔드 LayerResponse 스펙)
-// 표시 가능한 필드(유형/위험레벨/상태/제보 건수)만 노출한다.
 export default function MarkerPopup({ item, onClose }: MarkerPopupProps) {
   const { map } = useKakaoMap();
   const [container] = useState(() => document.createElement("div"));
@@ -94,7 +92,22 @@ export default function MarkerPopup({ item, onClose }: MarkerPopupProps) {
           <dt>누적 제보 건수</dt>
           <dd>{item.reportCount}건</dd>
         </div>
+        {item.locationDetail && (
+          <div className="flex justify-between gap-2">
+            <dt className="shrink-0">상세 위치</dt>
+            <dd className="text-right">{item.locationDetail}</dd>
+          </div>
+        )}
+        {item.latestReportAt && (
+          <div className="flex justify-between">
+            <dt>최근 제보 시각</dt>
+            <dd>{new Date(item.latestReportAt).toLocaleString("ko-KR")}</dd>
+          </div>
+        )}
       </dl>
+      {item.content && (
+        <p className="mt-2 whitespace-pre-wrap text-zinc-700">{item.content}</p>
+      )}
       <Link
         href={`/report?lat=${item.lat}&lng=${item.lng}`}
         className="mt-3 block rounded-full bg-foreground px-4 py-2 text-center text-background"
