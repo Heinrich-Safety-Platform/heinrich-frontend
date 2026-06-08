@@ -16,6 +16,12 @@
 
 - Next.js + TypeScript + Tailwind CSS + Kakao Maps SDK
 
+## 배포
+
+- 위험도 지도(/map): https://heinrich-frontend.vercel.app/map
+- 시민 제보(/report): https://heinrich-frontend.vercel.app/report
+- 관리자(/admin): https://heinrich-frontend.vercel.app/admin
+
 ## 로컬 실행
 
 ```bash
